@@ -4,15 +4,8 @@ import { Container } from "./components/AppStyle/style";
 
 function App() {
   const [list, setList] = useState([]);
-  const [input, setInput] = useState({
-    name: "",
-    email: "",
-    date: ""
-  });
-
-  const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value, date: new Date() });
-  };
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
 
   const removeItem = (item) => {
     const newList = list.filter((i) => i !== item);
@@ -21,8 +14,10 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setList([...list, input]);
-    setInput({ name: "", email: "" });
+    setList([...list, { first_name: name, email: email }]);
+
+    setName('')
+    setEmail('')
   };
 
   return (
@@ -31,8 +26,8 @@ function App() {
         <input
           type="text"
           name="name"
-          value={input.name}
-          onChange={handleChange}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="name"
           required
           autoFocus
@@ -41,8 +36,8 @@ function App() {
         <input
           type="email"
           name="email"
-          value={input.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="email"
           required
           autoFocus
@@ -58,7 +53,7 @@ function App() {
           <Comentarios
             key={index}
             id={index}
-            name={item.name}
+            name={item.first_name}
             email={item.email}
             date={item.date}
             remove={removeItem.bind(this, item)}
