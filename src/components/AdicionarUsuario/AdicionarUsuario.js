@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./AdicionarUsuario.css";
 
-function AdicionarUsuario(props) {
+function AdicionarUsuario() {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
@@ -10,19 +10,20 @@ function AdicionarUsuario(props) {
   const onSubmitHandler = event => {
       event.preventDefault();
 
-      const usuario = { nome,sobrenome,email }
+      const usuario = { nome, sobrenome, email }
 
       fetch('https://reqres.in/api/users', { 
           method: 'POST',
           headers: { 'Content-Type' : 'application/json'},
           body: JSON.stringify(usuario)
       })
-      .then( resposta => resposta.json())
-      .then( dados => {
+      .then( resposta => {
+        if(resposta.ok){
           setNome('')
           setSobrenome('')
           setEmail('')
-          props.adicionarUsuario(dados)
+          alert('Usuario cadastrado com sucesso')          
+        }
       })
   }
 
